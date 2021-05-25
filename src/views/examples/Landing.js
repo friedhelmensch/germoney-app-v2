@@ -45,10 +45,15 @@ import Download from "../IndexSections/Download.js";
 
 class Landing extends React.Component {
   state = {};
-  componentDidMount() {
+  async componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
+    const supplyWithDecimals =
+      await this.props.drizzle.contracts.Germoney.methods.totalSupply().call();
+
+    console.log("-----------suplyyyyy--------");
+    console.log(supplyWithDecimals);
   }
   render() {
     return (
