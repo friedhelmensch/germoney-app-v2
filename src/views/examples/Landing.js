@@ -40,20 +40,38 @@ import {
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import CardsFooter from "components/Footers/CardsFooter.js";
 
-// index page sections
-import Download from "../IndexSections/Download.js";
-
 class Landing extends React.Component {
   state = {};
   async componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
+
+    const priceInWei = await this.props.drizzle.contracts.Germoney.methods
+      .price()
+      .call();
+
     const supplyWithDecimals =
       await this.props.drizzle.contracts.Germoney.methods.totalSupply().call();
 
-    console.log("-----------suplyyyyy--------");
-    console.log(supplyWithDecimals);
+    var account = this.props.drizzleState.accounts[0];
+
+    const balance = account
+      ? await this.props.drizzle.contracts.Germoney.methods
+          .balanceOf(account)
+          .call()
+      : 0;
+
+    const realBalance = balance / 100;
+    const totalSupply = supplyWithDecimals / 100;
+    const priceInEth =
+      this.props.drizzle.web3.utils.fromWei(priceInWei, "ether") * 100;
+
+    this.setState({
+      priceInEth: priceInEth,
+      totalSupply: totalSupply,
+      balance: realBalance,
+    });
   }
   render() {
     return (
@@ -90,6 +108,7 @@ class Landing extends React.Component {
                           className="btn-icon mb-3 mb-sm-0"
                           color="info"
                           href="https://etherscan.io/address/0x844Af22fBEC4D1bb9C062F33D29e4Ad8d0EFc01D"
+                          target="_blank"
                         >
                           <span className="btn-inner--icon mr-1">
                             <i className="fa fa-code" />
@@ -144,7 +163,7 @@ class Landing extends React.Component {
                   />
                 </Col>
                 <Col className="order-md-1" md="6">
-                  <div id="buy" className="pr-md-5">
+                  <div className="pr-md-5">
                     <div className="icon icon-lg icon-shape icon-shape-success shadow rounded-circle mb-5">
                       <i className="ni ni-settings-gear-65" />
                     </div>
@@ -162,7 +181,11 @@ class Landing extends React.Component {
                           </div>
                           <div>
                             <h6 className="mb-0">
-                              Total supply limited to 13.000.000.000 GER
+                              Total supply limited to{" "}
+                              {this.state.totalSupply
+                                ? this.state.totalSupply.toLocaleString("en")
+                                : -1}{" "}
+                              GER
                             </h6>
                           </div>
                         </div>
@@ -233,13 +256,15 @@ class Landing extends React.Component {
                         />
                       </svg>
                       <h4 className="display-3 font-weight-bold text-white">
-                        Tokenomics
+                        History of Germoney
                       </h4>
                       <p className="lead text-italic text-white">
-                        Germoney is minted by sending ether. No single entitiy
-                        can have an impact on the quantity or price. When all
-                        Germoney is minted it will get scarce as no new tokens
-                        will ever be created afterwards.
+                        Germoney represents the old currency of Germany. The
+                        D-Mark. Therefore the total supply equals the remaining
+                        D-Mark existing in circulation. The price of Germoney
+                        reflects the price of a D-Mark in relation to Ether. On
+                        the day of contract deployment 1 GER was exactly worth 1
+                        D-Mark.
                       </p>
                     </blockquote>
                   </Card>
@@ -249,28 +274,19 @@ class Landing extends React.Component {
                     <div className="icon icon-lg icon-shape icon-shape-warning shadow rounded-circle mb-5">
                       <i className="ni ni-settings" />
                     </div>
-                    <h3>100 % decentralized</h3>
+                    <h3>Tokenomics</h3>
                     <p className="lead">
-                      Don't let your uses guess by attaching tooltips and
-                      popoves to any element. Just make sure you enable them
-                      first via JavaScript.
-                    </p>
-                    <p>
-                      The kit comes with three pre-built pages to help you get
-                      started faster. You can change the text and images and
-                      you're good to go.
-                    </p>
-                    <p>
-                      The kit comes with three pre-built pages to help you get
-                      started faster. You can change the text and images and
-                      you're good to go.
+                      Germoney is minted by sending ether. No single entitiy can
+                      have an impact on the quantity or price. When all Germoney
+                      is minted it will get scarce as no new tokens will ever be
+                      created afterwards.
                     </p>
                     <a
                       className="font-weight-bold text-warning mt-5"
                       href="#pablo"
                       onClick={(e) => e.preventDefault()}
                     >
-                      A beautiful UI Kit for impactful websites
+                      100% decentralized.
                     </a>
                   </div>
                 </Col>
@@ -296,8 +312,8 @@ class Landing extends React.Component {
                         <i className="ni ni-building text-primary" />
                       </div>
                     </div>
-                    <div className="pl-4">
-                      <h4 className="display-3 text-white">Modern Interface</h4>
+                    <div className="pl-4" id="buy">
+                      <h4 className="display-3 text-white">Buy Germoney</h4>
                       <p className="text-white">
                         The Arctic Ocean freezes every winter and much of the
                         sea-ice then thaws every summer, and that process will
@@ -567,37 +583,6 @@ class Landing extends React.Component {
               </Row>
             </Container>
           </section>
-          <section className="section section-lg pt-0">
-            <Container>
-              <Card className="bg-gradient-warning shadow-lg border-0">
-                <div className="p-5">
-                  <Row className="align-items-center">
-                    <Col lg="8">
-                      <h3 className="text-white">
-                        We made website building easier for you.
-                      </h3>
-                      <p className="lead text-white mt-3">
-                        I will be the leader of a company that ends up being
-                        worth billions of dollars, because I got the answers. I
-                        understand culture.
-                      </p>
-                    </Col>
-                    <Col className="ml-lg-auto" lg="3">
-                      <Button
-                        block
-                        className="btn-white"
-                        color="default"
-                        href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-landing-page"
-                        size="lg"
-                      >
-                        Download React
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
-              </Card>
-            </Container>
-          </section>
           <section className="section section-lg bg-gradient-default">
             <Container className="pt-lg pb-300">
               <Row className="text-center justify-content-center">
@@ -744,9 +729,7 @@ class Landing extends React.Component {
               </Row>
             </Container>
           </section>
-          <Download />
         </main>
-        <CardsFooter />
       </>
     );
   }
