@@ -38,6 +38,7 @@ import {
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import SimpleFooter from "components/Footers/SimpleFooter";
 
 const calculateCosts = (event, priceInEth) => {
   event.preventDefault();
@@ -51,7 +52,7 @@ const calculateCosts = (event, priceInEth) => {
   return etherToPay;
 };
 
-class Landing extends React.Component {
+class Germoney extends React.Component {
   state = {
     priceInEth: 0,
     totalSupply: 0,
@@ -604,10 +605,11 @@ class Landing extends React.Component {
               </Row>
             </Container>
           </section>
+          <SimpleFooter />
         </main>
       </>
     );
   }
 }
 
-export default Landing;
+export default Germoney;

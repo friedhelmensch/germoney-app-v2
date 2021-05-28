@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Landing from "./Landing";
+import Germoney from "./Germoney";
 
 import { DrizzleContext } from "@drizzle/react-plugin";
 
@@ -13,7 +13,7 @@ class App extends Component {
             return "Loading...";
           }
 
-          return <Landing drizzle={drizzle} drizzleState={drizzleState} />;
+          return <Germoney drizzle={drizzle} drizzleState={drizzleState} />;
         }}
       </DrizzleContext.Consumer>
     );
