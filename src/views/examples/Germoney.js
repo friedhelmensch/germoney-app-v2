@@ -52,6 +52,39 @@ const calculateCosts = (event, priceInEth) => {
   return etherToPay;
 };
 
+const sectionWithoutWeb3 = (
+  <div className="section">
+    {"Please use a web3 enabled browser or add-on to buy Germoney."}
+    <br></br>
+    <Button
+      block
+      className="btn-icon mb-3 mb-sm-0"
+      color="default"
+      href="https://metamask.io/"
+      target="_blank"
+    >
+      <span className="btn-inner--text">Meta Mask</span>
+    </Button>
+    <Button
+      block
+      className="btn-icon mb-3 mb-sm-0"
+      href="https://trustwallet.com/"
+      target="_blank"
+    >
+      <span className="btn-inner--text">Trust wallet (mobile)</span>
+    </Button>
+    <Button
+      block
+      className="btn-icon mb-3 mb-sm-0"
+      color="info"
+      href="https://status.im/"
+      target="_blank"
+    >
+      <span className="btn-inner--text">Status.im (mobile)</span>
+    </Button>{" "}
+  </div>
+);
+
 class Germoney extends React.Component {
   state = {
     priceInEth: 0,
@@ -59,6 +92,11 @@ class Germoney extends React.Component {
     balance: 0,
     total: 0,
   };
+
+  constructor(props) {
+    super(props);
+    this.buyGermoney = this.buyGermoney.bind(this);
+  }
 
   async componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -89,6 +127,17 @@ class Germoney extends React.Component {
       priceInEth: priceInEth,
       totalSupply: totalSupply,
       balance: realBalance,
+    });
+  }
+
+  async buyGermoney(event) {
+    const weiToPay = this.props.drizzle.web3.utils.toWei(
+      this.state.total.toString(),
+      "ether"
+    );
+    await this.props.drizzle.contracts.Germoney.methods.buy.cacheSend({
+      value: weiToPay,
+      gas: 55000,
     });
   }
 
@@ -384,17 +433,22 @@ class Germoney extends React.Component {
                             </InputGroup>
                           </FormGroup>
                           <p className="mt-0">Price: {this.state.total} Eth</p>
-                          <div>
-                            <Button
-                              block
-                              className="btn-round"
-                              color="default"
-                              size="lg"
-                              type="button"
-                            >
-                              Buy Now
-                            </Button>
-                          </div>
+                          {window.ethereum ? (
+                            <div>
+                              <Button
+                                block
+                                className="btn-round"
+                                color="default"
+                                size="lg"
+                                type="button"
+                                onClick={this.buyGermoney}
+                              >
+                                Buy Now
+                              </Button>
+                            </div>
+                          ) : (
+                            sectionWithoutWeb3
+                          )}
                         </div>
                       </div>
                     </CardBody>
