@@ -39,8 +39,26 @@ import {
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 
+const calculateCosts = (event, priceInEth) => {
+  event.preventDefault();
+  const amountAsText = event.target.value;
+  const cleaned = amountAsText.replace(",", ".");
+  const desiredAmount = parseFloat(cleaned);
+  if (Number.isNaN(desiredAmount)) {
+    return 0;
+  }
+  const etherToPay = desiredAmount * priceInEth;
+  return etherToPay;
+};
+
 class Landing extends React.Component {
-  state = {};
+  state = {
+    priceInEth: 0,
+    totalSupply: 0,
+    balance: 0,
+    total: 0,
+  };
+
   async componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -72,6 +90,7 @@ class Landing extends React.Component {
       balance: realBalance,
     });
   }
+
   render() {
     return (
       <>
@@ -316,7 +335,7 @@ class Landing extends React.Component {
                         Get in before it´s too late.
                       </h4>
                       <p className="text-white">
-                        Enter the amount of Germoney you want to buy.
+                        As simple as clicking a button.
                       </p>
                     </div>
                   </div>
@@ -331,7 +350,7 @@ class Landing extends React.Component {
                         <div className="pl-4">
                           <h5 className="title text-success">Buy Germoney</h5>
                           <p className="mt-0">
-                            As simple as clicking a button.
+                            Enter the amount of Germoney you want to buy.
                           </p>
                           <FormGroup
                             className={classnames("mt-5", {
@@ -353,9 +372,17 @@ class Landing extends React.Component {
                                 onBlur={(e) =>
                                   this.setState({ nameFocused: false })
                                 }
+                                onChange={(e) => {
+                                  const costs = calculateCosts(
+                                    e,
+                                    this.state.priceInEth
+                                  );
+                                  this.setState({ total: costs });
+                                }}
                               />
                             </InputGroup>
                           </FormGroup>
+                          <p className="mt-0">Price: {this.state.total} Eth</p>
                           <div>
                             <Button
                               block
