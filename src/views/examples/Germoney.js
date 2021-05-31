@@ -142,6 +142,7 @@ class Germoney extends React.Component {
   }
 
   async buyGermoney(event) {
+    event.preventDefault();
     const weiToPay = this.props.drizzle.web3.utils.toWei(
       this.state.total.toString(),
       "ether"
