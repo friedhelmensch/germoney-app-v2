@@ -39,7 +39,6 @@ import {
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter";
-import { apiKey } from "../../configuration/config.json";
 
 const calculateCosts = (event, priceInEth) => {
   event.preventDefault();
@@ -125,6 +124,7 @@ class Germoney extends React.Component {
     const priceInEth =
       this.props.drizzle.web3.utils.fromWei(priceInWei, "ether") * 100;
 
+    const apiKey = process.env.REACT_APP_APIKEY;
     const { address } = this.props.drizzle.contracts.Germoney;
     const response = await fetch(
       `https://api.bloxy.info/token/token_stat?token=${address}&key=${apiKey}&format=structure`

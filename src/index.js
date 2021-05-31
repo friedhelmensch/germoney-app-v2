@@ -25,7 +25,6 @@ import "assets/scss/argon-design-system-react.scss?v1.1.0";
 
 import App from "views/examples/App";
 
-import { projectId } from "./configuration/config.json";
 import { Drizzle, generateStore } from "@drizzle/store";
 import { DrizzleContext } from "@drizzle/react-plugin";
 import Germoney from "./contracts/Germoney.json";
@@ -33,7 +32,7 @@ const options = {
   contracts: [Germoney],
   web3: {
     fallback: {
-      url: `wss://mainnet.infura.io/ws/v3/${projectId}`,
+      url: `wss://mainnet.infura.io/ws/v3/${process.env.REACT_APP_PROJECTID}`,
     },
   },
 };
