@@ -39,6 +39,7 @@ import {
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter";
+import { apiKey } from "../../configuration/config.json";
 
 const calculateCosts = (event, priceInEth) => {
   event.preventDefault();
@@ -91,6 +92,7 @@ class Germoney extends React.Component {
     totalSupply: 0,
     balance: 0,
     total: 0,
+    holder: 0,
   };
 
   constructor(props) {
@@ -123,10 +125,19 @@ class Germoney extends React.Component {
     const priceInEth =
       this.props.drizzle.web3.utils.fromWei(priceInWei, "ether") * 100;
 
+    const { address } = this.props.drizzle.contracts.Germoney;
+    const response = await fetch(
+      `https://api.bloxy.info/token/token_stat?token=${address}&key=${apiKey}&format=structure`
+    );
+
+    const result = await response.json();
+    const holders = result[0].holders_count;
+
     this.setState({
       priceInEth: priceInEth,
       totalSupply: totalSupply,
       balance: realBalance,
+      holders: holders,
     });
   }
 
@@ -286,7 +297,9 @@ class Germoney extends React.Component {
                             </Badge>
                           </div>
                           <div>
-                            <h6 className="mb-0">1078 Holders so far.</h6>
+                            <h6 className="mb-0">
+                              {this.state.holders} Holders so far.
+                            </h6>
                           </div>
                         </div>
                       </li>
