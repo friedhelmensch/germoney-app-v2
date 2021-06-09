@@ -58,21 +58,6 @@ class SimpleFooter extends React.Component {
                 </UncontrolledTooltip>
                 <Button
                   className="btn-icon-only rounded-circle ml-1"
-                  color="facebook"
-                  href="https://www.facebook.com/creativetim"
-                  id="tooltip837440414"
-                  target="_blank"
-                >
-                  <span className="btn-inner--icon">
-                    <i className="fa fa-facebook-square" />
-                  </span>
-                </Button>
-                <UncontrolledTooltip delay={0} target="tooltip837440414">
-                  Like us
-                </UncontrolledTooltip>
-
-                <Button
-                  className="btn-icon-only rounded-circle ml-1"
                   color="github"
                   href="https://github.com/friedhelmensch/germoney-app-v2"
                   id="tooltip495507257"
@@ -92,7 +77,7 @@ class SimpleFooter extends React.Component {
               <Col md="6">
                 <div className=" copyright">
                   © {new Date().getFullYear()}{" "}
-                  <a href="https://germoney.vercel.app" target="_blank">
+                  <a href="https://www.germoney.cash" target="_blank">
                     The team of Germoney
                   </a>
                   .
