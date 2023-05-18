@@ -96,6 +96,7 @@ class Germoney extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.buyGermoney = this.buyGermoney.bind(this);
   }
 
@@ -104,35 +105,33 @@ class Germoney extends React.Component {
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
 
-    const priceInWei = await this.props.drizzle.contracts.Germoney.methods
-      .price()
-      .call();
+    const priceInWei = await this.props.contract.price();
 
-    const supplyWithDecimals =
-      await this.props.drizzle.contracts.Germoney.methods.totalSupply().call();
+    console.log(priceInWei.toString());
 
-    var account = this.props.drizzleState.accounts[0];
+    const supplyWithDecimals = await this.props.contract.totalSupply();
 
-    const balance = account
-      ? await this.props.drizzle.contracts.Germoney.methods
-          .balanceOf(account)
-          .call()
-      : 0;
+    const balance = await this.props.contract.balanceOf(this.props.account);
 
     const realBalance = balance / 100;
     const totalSupply = supplyWithDecimals / 100;
     const priceInEth =
-      this.props.drizzle.web3.utils.fromWei(priceInWei, "ether") * 100;
+      this.props.utils.fromWei(priceInWei.toString(), "ether") * 100;
 
     const apiKey = process.env.REACT_APP_APIKEY;
-    const { address } = this.props.drizzle.contracts.Germoney;
+    const { address } = "0x0"; //this.props.drizzle.contracts.Germoney;
+    /*
     const response = await fetch(
       `https://api.bloxy.info/token/token_stat?token=${address}&key=${apiKey}&format=structure`
     );
 
     const result = await response.json();
     const holders = result[0].holders_count;
+    */
 
+    console.log(realBalance);
+
+    const holders = 5;
     this.setState({
       priceInEth: priceInEth,
       totalSupply: totalSupply,
@@ -143,14 +142,18 @@ class Germoney extends React.Component {
 
   async buyGermoney(event) {
     event.preventDefault();
-    const weiToPay = this.props.drizzle.web3.utils.toWei(
+    console.log("Buy");
+    const weiToPay = this.props.utils.toWei(
       this.state.total.toString(),
       "ether"
     );
-    await this.props.drizzle.contracts.Germoney.methods.buy.cacheSend({
-      value: weiToPay,
-      gas: 55000,
-    });
+    try {
+      await this.props.contract.buy({
+        value: weiToPay,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render() {
@@ -179,8 +182,8 @@ class Germoney extends React.Component {
                       <h1 className="display-3 text-white">
                         Germoney{" "}
                         <span>
-                          All about a very important token in the Ethereum
-                          ecosystem.
+                          All about a very important token in the{" "}
+                          <s>Ethereum</s> Pulse ecosystem.
                         </span>
                       </h1>
                       <div className="btn-wrapper">
@@ -282,7 +285,7 @@ class Germoney extends React.Component {
                           </div>
                           <div>
                             <h6 className="mb-0">
-                              Initial price fixed to 0.0030075993 ETH/GER
+                              Initial price fixed to 0.0030075993 PLS/GER
                             </h6>
                           </div>
                         </div>
@@ -446,7 +449,7 @@ class Germoney extends React.Component {
                               />
                             </InputGroup>
                           </FormGroup>
-                          <p className="mt-0">Price: {this.state.total} Eth</p>
+                          <p className="mt-0">Price: {this.state.total} PLS</p>
                           {window.ethereum ? (
                             <div>
                               <Button

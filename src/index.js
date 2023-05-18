@@ -25,19 +25,12 @@ import "assets/scss/argon-design-system-react.scss?v1.1.0";
 
 import App from "views/examples/App";
 
-import { Drizzle, generateStore } from "@drizzle/store";
-import { DrizzleContext } from "@drizzle/react-plugin";
-import Germoney from "./contracts/Germoney.json";
-const options = {
-  contracts: [Germoney],
-  web3: {
-    fallback: {
-      url: `wss://mainnet.infura.io/ws/v3/${process.env.REACT_APP_PROJECTID}`,
-    },
-  },
-};
-const drizzleStore = generateStore(options);
-const drizzle = new Drizzle(options, drizzleStore);
+import { Web3ReactProvider } from "@web3-react/core";
+import { Web3Provider } from "@ethersproject/providers";
+
+function getLibrary(provider) {
+  return new Web3Provider(provider);
+}
 
 ReactDOM.render(
   <BrowserRouter>
@@ -47,9 +40,9 @@ ReactDOM.render(
         exact
         render={(props) => {
           return (
-            <DrizzleContext.Provider drizzle={drizzle}>
-              <App {...props} />
-            </DrizzleContext.Provider>
+            <Web3ReactProvider getLibrary={getLibrary}>
+              <App />
+            </Web3ReactProvider>
           );
         }}
       />
