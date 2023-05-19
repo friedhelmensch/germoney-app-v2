@@ -111,31 +111,18 @@ class Germoney extends React.Component {
 
     const supplyWithDecimals = await this.props.contract.totalSupply();
 
-    const balance = await this.props.contract.balanceOf(this.props.account);
+    //    const balance = await this.props.contract.balanceOf(this.props.account);
+    //    const realBalance = balance / 100;
 
-    const realBalance = balance / 100;
     const totalSupply = supplyWithDecimals / 100;
     const priceInEth =
       this.props.utils.fromWei(priceInWei.toString(), "ether") * 100;
-
-    const apiKey = process.env.REACT_APP_APIKEY;
-    const { address } = "0x0"; //this.props.drizzle.contracts.Germoney;
-    /*
-    const response = await fetch(
-      `https://api.bloxy.info/token/token_stat?token=${address}&key=${apiKey}&format=structure`
-    );
-
-    const result = await response.json();
-    const holders = result[0].holders_count;
-    */
-
-    console.log(realBalance);
 
     const holders = 5;
     this.setState({
       priceInEth: priceInEth,
       totalSupply: totalSupply,
-      balance: realBalance,
+      balance: 0,
       holders: holders,
     });
   }
