@@ -45,7 +45,7 @@ class SimpleFooter extends React.Component {
                 <Button
                   className="btn-icon-only rounded-circle"
                   color="twitter"
-                  href="https://twitter.com/germoney"
+                  href="https://twitter.com/germoney_cash"
                   id="tooltip475038074"
                   target="_blank"
                 >
