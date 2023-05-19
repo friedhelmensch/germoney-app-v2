@@ -336,7 +336,9 @@ class Germoney extends React.Component {
                         D-Mark existing in circulation. The price of Germoney
                         reflects the price of a D-Mark in relation to Ether. On
                         the day of contract deployment 1 GER was exactly worth 1
-                        D-Mark.
+                        D-Mark. Germoney has recently migrated to Pulse Chain
+                        since the advantages in relation to the price and
+                        scalability are overwhelming on Pulse Chain.
                       </p>
                     </blockquote>
                   </Card>
@@ -348,7 +350,7 @@ class Germoney extends React.Component {
                     </div>
                     <h3>Tokenomics</h3>
                     <p className="lead">
-                      Germoney is minted by sending ether. No single entitiy can
+                      Germoney is minted by sending PLS. No single entitiy can
                       have an impact on the quantity or price. When all Germoney
                       is minted it will get scarce as no new tokens will ever be
                       created afterwards.
