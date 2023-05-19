@@ -177,14 +177,14 @@ class Germoney extends React.Component {
                         <Button
                           className="btn-icon mb-3 mb-sm-0"
                           color="info"
-                          href="https://etherscan.io/address/0x844Af22fBEC4D1bb9C062F33D29e4Ad8d0EFc01D"
+                          href="https://scan.pulsechain.com/address/0x844Af22fBEC4D1bb9C062F33D29e4Ad8d0EFc01D"
                           target="_blank"
                         >
                           <span className="btn-inner--icon mr-1">
                             <i className="fa fa-code" />
                           </span>
                           <span className="btn-inner--text">
-                            Germoney on Etherscan
+                            Germoney on the Pulse Chain Explorer
                           </span>
                         </Button>
                         <Button
