@@ -169,22 +169,22 @@ class Germoney extends React.Component {
                       <h1 className="display-3 text-white">
                         Germoney{" "}
                         <span>
-                          All about a very important token in the{" "}
-                          <s>Ethereum</s> Pulse ecosystem.
+                          All about a very important token in the <s>Pulse</s>{" "}
+                          Ethereum ecosystem.
                         </span>
                       </h1>
                       <div className="btn-wrapper">
                         <Button
                           className="btn-icon mb-3 mb-sm-0"
                           color="info"
-                          href="https://scan.pulsechain.com/address/0x844Af22fBEC4D1bb9C062F33D29e4Ad8d0EFc01D"
+                          href="https://etherscan.io/address/0x844Af22fBEC4D1bb9C062F33D29e4Ad8d0EFc01D"
                           target="_blank"
                         >
                           <span className="btn-inner--icon mr-1">
                             <i className="fa fa-code" />
                           </span>
                           <span className="btn-inner--text">
-                            Germoney on the Pulse Chain Explorer
+                            Germoney on the Etherscan.
                           </span>
                         </Button>
                         <Button
@@ -272,7 +272,7 @@ class Germoney extends React.Component {
                           </div>
                           <div>
                             <h6 className="mb-0">
-                              Initial price fixed to 0.0030075993 PLS/GER
+                              Initial price fixed to 0.0030075993 ETH/GER
                             </h6>
                           </div>
                         </div>
@@ -336,9 +336,8 @@ class Germoney extends React.Component {
                         D-Mark existing in circulation. The price of Germoney
                         reflects the price of a D-Mark in relation to Ether. On
                         the day of contract deployment 1 GER was exactly worth 1
-                        D-Mark. Germoney has recently migrated to Pulse Chain
-                        since the advantages in relation to the price and
-                        scalability are overwhelming on Pulse Chain.
+                        D-Mark. Germoney is also available on pulse chain.
+                        Simply change the network to Pulse Chain.
                       </p>
                     </blockquote>
                   </Card>
@@ -350,7 +349,7 @@ class Germoney extends React.Component {
                     </div>
                     <h3>Tokenomics</h3>
                     <p className="lead">
-                      Germoney is minted by sending PLS. No single entitiy can
+                      Germoney is minted by sending ETH. No single entitiy can
                       have an impact on the quantity or price. When all Germoney
                       is minted it will get scarce as no new tokens will ever be
                       created afterwards.
@@ -438,7 +437,7 @@ class Germoney extends React.Component {
                               />
                             </InputGroup>
                           </FormGroup>
-                          <p className="mt-0">Price: {this.state.total} PLS</p>
+                          <p className="mt-0">Price: {this.state.total} ETH</p>
                           {window.ethereum ? (
                             <div>
                               <Button
